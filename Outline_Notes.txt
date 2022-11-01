@@ -1,0 +1,61 @@
+Project 1 Module 1 - The DOM based game
+
+Creating our first computer game
+
+Mandatory:is 
+
+	1) Built with HTML, CSs, JS + use DOM
+	2) Hosted on Github
+	3)Commits to Github
+	4) Readme file with explanations
+		-link to live site
+		-instalation instructions
+		-unsolved problems
+
+(freecodecamp has lessons on game building)
+
+===PONG===
+Logic behind game
+
+create html page
+then create canvas tag
+link JS file to HTML
+
+Js
+get  element pong, set constant to canvas 
+get context of canvas and set to constant context("2d")
+
+function to draw rect, fillstyle, fillrect
+function to draw circle, fillstyle, b egin path, arc, closepath, fill shap
+function drawtext, fillstyle, font, filltext
+create userpaddle (object) x, y axis, height, color, score
+create comp paddle(obj)
+creat ball(obj)
+create function to render the game
+draw the net 
+draw score
+draw user and comp paddle
+draw the ball 
+creat the net (obj)
+function to draw the net
+Initialize game with a game function, whicnwill include 2 methods: render and update
+create  loop for framepersecond , 50 times every 1 second
+create function for update
+collision detection function - when the ball collides with the paddle. Takes 2 parameters. top bottom right left edges
+	for paddle and for ball
+	create player within collision detection function to determine which player is hiting the ball
+	if/else statement for collision
+	add a direction for when the ball is hit so it doesnt go thru the paddle but bounces back
+	must be at a 45 degree angle when ball is hit
+reset ball function
+Create control for user paddle, use event listener to control paddle with mouse
+function to move the paddle
+create simple AI to control the paddle	
+inverse velocity of ball
+if/else statement to update the score 
+
+draw rectangle and circle for ball
+const canvassnost
+
+
+
