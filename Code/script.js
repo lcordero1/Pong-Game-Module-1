@@ -3,12 +3,33 @@ const canvas = document.getElementById("canvas");
 
 // getContext of canvas = methods and properties to draw and do a lot of thing to the canvas
 const ctx = canvas.getContext('2d');
-
+//select score element
 const compScore = document.getElementById("computer-score")
 const mainPlScore = document.getElementById("mainPlayer-score")
+//select player elements
+// const  mainPl = document.getElementById("main-player")
+// const compOpp = document.getElementById("computer")
+
+class Player {
+    constructor(xAxis, yAxis, width, height, score, color) {
+        this.xAxis = xAxis,
+        this.yAxis + yAxis,
+        this.width = width,
+        this.height = height,
+        this.score = score,
+        this.color = color
+    }
+}
 
 
-// Create the ball object
+// create player1 paddle
+const MainPl = new Player (0, (canvas.height - 100)/2, 0, "white")
+
+
+// Computer Paddle
+const compOpp = new Player (canvas.width - 10, (canvas.height - 100)/2, 10, 100, 0,"white")
+//width and height of paddle
+// Ball
 const ball = {
     x : canvas.width/2,
     y : canvas.height/2,
@@ -18,48 +39,27 @@ const ball = {
     speed : 7,
     color : "#white"
 }
-
-// User Paddle
-const user = {
-    x : 0, // left side of canvas
-    y : (canvas.height - 100)/2, // -100 the height of paddle
-    width : 10,
-    height : 100,
-    score : 0,
-    color : "WHITE"
-}
-
-// COM Paddle
-const com = {
-    x : canvas.width - 10, // - width of paddle
-    y : (canvas.height - 100)/2, // -100 the height of paddle
-    width : 10,
-    height : 100,
-    score : 0,
-    color : "WHITE"
-}
-
-// NET
+// Net
 const net = {
     x : (canvas.width - 2)/2,
     y : 0,
     height : 10,
     width : 2,
-    color : "WHITE"
+    color : "#white"
 }
 
-// Use function to draw rectanles which will be used for our paddles
+// Function for drawing rectangles
 
-function drawRect(x, y, w, h, color){
+function drawRect(xAxis, yAxis, w, h, color){
     ctx.fillStyle = color;
-    ctx.fillRect(x, y, w, h);
+    ctx.fillRect(xAxis, yAxis, w, h);
 }
 
 // draw circle, will be used to draw the ball
-function drawArc(x, y, r, color){
+function drawCircle(xAxis, yAxis, r, color){
     ctx.fillStyle = color;
     ctx.beginPath();
-    ctx.arc(x,y,r,0,Math.PI*2,true);
+    ctx.arc(xAxis,yAxis,r,0,Math.PI*2,true);
     ctx.closePath();
     ctx.fill();
 }
@@ -67,19 +67,20 @@ function drawArc(x, y, r, color){
 // listening to the mouse
 canvas.addEventListener("mousemove", getMousePos);
 
-function getMousePos(evt){
-    let rect = canvas.getBoundingClientRect();
+ function getMousePos(evt){
+     let rect = canvas.getBoundingClientRect();
     
-    user.y = evt.clientY - rect.top - user.height/2;
+   user.y = evt.clientY - rect.top - user.height/2;
 }
-
-// This function resets the ball when either the mainPl scores or the compOpp scores
+//getBoundingClientRect providing information about the size of an element and its position relative to the  area in computer graphics that is currently being viewed
+// resets the ball when  mainPl scores or compOpp scores
 function resetBall(){
-    ball.x = canvas.width/2;
-    ball.y = canvas.height/2;
+    ball.xAxis = canvas.width/2;
+    ball.yAxis = canvas.height/2;
     ball.velocityX = -ball.velocityX;
     ball.speed = 7;
 }
+//velocity controls speed of ball
 
 // draw the net
 function drawNet(){
@@ -88,24 +89,24 @@ function drawNet(){
     }
 }
 
-//draw text
-function drawText(text,x,y){
+//draw text is used to create text on canvas
+function drawText(text,xAxis,yAxis){
     ctx.fillStyle = "#FFF";
-    ctx.font = "75px fantasy";
-    ctx.fillText(text, x, y);
+    ctx.font = "45px fantasy";
+    ctx.fillText(text, xAxis, yAxis);
 }
 
 // collision detection for when ball hits paddle(s)
 function collision(b,p){
-    p.top = p.y;
-    p.bottom = p.y + p.height;
-    p.left = p.x;
-    p.right = p.x + p.width;
+    p.top = p.yAxis;
+    p.bottom = p.yAxis + p.height;
+    p.left = p.xAxis;
+    p.right = p.xAxis + p.width;
     
-    b.top = b.y - b.radius;
-    b.bottom = b.y + b.radius;
-    b.left = b.x - b.radius;
-    b.right = b.x + b.radius;
+    b.top = b.yAxis - b.radius;
+    b.bottom = b.yAxis + b.radius;
+    b.left = b.xAxis - b.radius;
+    b.right = b.xAxis + b.radius;
     
     return p.left < b.right && p.top < b.bottom && p.right > b.left && p.bottom > b.top;
 }
@@ -115,59 +116,57 @@ function update(){
     
     // change the score of players, if the ball goes to the left "ball.x<0" computer win, else if "ball.x > canvas.width" the user win
     if( ball.x - ball.radius < 0 ){
-        com.score++;
+        compOpp.score++;
         compScore.play();
         resetBall();
-    }else if( ball.x + ball.radius > canvas.width){
+    } else if( ball.x + ball.radius > canvas.width){
         mainPl.score++;
         mainPlScore.play();
         resetBall();
     }
     
     // the ball has a velocity
-    ball.x += ball.velocityX;
-    ball.y += ball.velocityY;
+    ball.xAxis += ball.velocityX;
+    ball.yAxis += ball.velocityY;
     
-    // computer plays for itself, and we must be able to beat it
-    // simple AI
-    com.y += ((ball.y - (com.y + com.height/2)))*0.1;
     
-    // when the ball collides with bottom and top walls we inverse the y velocity.
-    if(ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height){
+    // simple AI for computer 
+    compOpp.yAxis += ((ball.yAxis - (compOpp.yAxis + compOpp.height/2)))*0.1;
+    
+    // if the ball collides with bottom and top walls the y velocity reverses.
+    if(ball.yAxis - ball.radius < 0 || ball.yAxis + ball.radius > canvas.height){
         ball.velocityY = -ball.velocityY;
         wall.play();
     }
     
-    // we check if the paddle hit the user or the com paddle
-    let player = (ball.x + ball.radius < canvas.width/2) ? user : com;
+    // if the paddle hit the mainPl or the comp paddle
+    let player = (ball.xAxis + ball.radius < canvas.width/2) ? user : com;
     
     // if the ball hits a paddle
     if(collision(ball,player)){
-        // play sound
-        hit.play();
-        // we check where the ball hits the paddle
-        let collidePoint = (ball.y - (player.y + player.height/2));
+        //where the ball hits the paddle
+        let collidePoint = (ball.yAxis - (player.yAxis + player.height/2));
         // normalize the value of collidePoint, we need to get numbers between -1 and 1.
         // -player.height/2 < collide Point < player.height/2
         collidePoint = collidePoint / (player.height/2);
         
-        // when the ball hits the top of a paddle we want the ball, to take a -45degees angle
-        // when the ball hits the center of the paddle we want the ball to take a 0degrees angle
+        // The ball needs to hit the top of the paddle at a -45degrees angle 
+        //The ball will hit the center at a 0degrees angle
         // when the ball hits the bottom of the paddle we want the ball to take a 45degrees
         // Math.PI/4 = 45degrees
-        let angleRad = (Math.PI/4) * collidePoint;
+        let angleRadius = (Math.PI/4) * collidePoint;
         
         // change the X and Y velocity direction
         let direction = (ball.x + ball.radius < canvas.width/2) ? 1 : -1;
         ball.velocityX = direction * ball.speed * Math.cos(angleRad);
         ball.velocityY = ball.speed * Math.sin(angleRad);
         
-        // speed up the ball everytime a paddle hits it.
+        // ball speed when paddle hits it.
         ball.speed += 0.1;
     }
 }
 
-// render function, the function that does al the drawing
+// render function for canvas drawing
 function render(){
     
     // clear the canvas
@@ -177,21 +176,22 @@ function render(){
     drawText(user.score,canvas.width/4,canvas.height/5);
     
     // draw the COM score to the right
-    drawText(com.score,3*canvas.width/4,canvas.height/5);
+    drawText(compOpp.score,3*canvas.width/4,canvas.height/5);
     
     // draw the net
     drawNet();
     
     // draw the mainPl paddle
-    drawRect(user.x, user.y, user.width, user.height, user.color);
+    drawRect(mainPl.xAxis, mainPl.yAxis, mainPl.width, mainPl.height, mainPl.color);
     
-    // draw the COM's paddle
-    drawRect(com.x, com.y, com.width, com.height, com.color);
+    // draw the compOpp paddle
+    drawRect(compOpp.xAxis, compOpp.yAxis, compOpp.width, compOpp.height, compOpp.color);
     
     // draw the ball
-    drawArc(ball.x, ball.y, ball.radius, ball.color);
+    drawArc(ball.xAxis, ball.yAxis, ball.radius, ball.color);
 }
 function game(){
+
     update();
     render();
 }
