@@ -23,7 +23,7 @@ class Player {
 
 
 // create player1 paddle
-const MainPl = new Player (0, (canvas.height - 100)/2, 0, "white")
+const mainPl = new Player (0, (canvas.height - 100)/2, 0, "white")
 
 
 // Computer Paddle
@@ -31,8 +31,8 @@ const compOpp = new Player (canvas.width - 10, (canvas.height - 100)/2, 10, 100,
 //width and height of paddle
 // Ball
 const ball = {
-    x : canvas.width/2,
-    y : canvas.height/2,
+    xAxis : canvas.width/2,
+    yAxis : canvas.height/2,
     radius : 10,
     velocityX : 5,
     velocityY : 5,
@@ -40,9 +40,9 @@ const ball = {
     color : "#white"
 }
 // Net
-const net = {
-    x : (canvas.width - 2)/2,
-    y : 0,
+const net = document.getElementById("net") {
+    xAxis : (canvas.width - 2)/2,
+    yAxis : 0,
     height : 10,
     width : 2,
     color : "#white"
@@ -70,7 +70,7 @@ canvas.addEventListener("mousemove", getMousePos);
  function getMousePos(evt){
      let rect = canvas.getBoundingClientRect();
     
-   user.y = evt.clientY - rect.top - user.height/2;
+   mainPl.yAxis = evt.clientY - rect.top - user.height/2;
 }
 //getBoundingClientRect providing information about the size of an element and its position relative to the  area in computer graphics that is currently being viewed
 // resets the ball when  mainPl scores or compOpp scores
@@ -85,7 +85,7 @@ function resetBall(){
 // draw the net
 function drawNet(){
     for(let i = 0; i <= canvas.height; i+=15){
-        drawRect(net.x, net.y + i, net.width, net.height, net.color);
+        drawRect(net.xAxis, net.yAxis + i, net.width, net.height, net.color);
     }
 }
 
@@ -114,12 +114,12 @@ function collision(b,p){
 // update function, the function that does all calculations
 function update(){
     
-    // change the score of players, if the ball goes to the left "ball.x<0" computer win, else if "ball.x > canvas.width" the user win
-    if( ball.x - ball.radius < 0 ){
+    // change the score of players, if the ball goes to the left "ball.xAxis<0" computer win, else if "ball.xAxis > canvas.width" the user win
+    if( ball.xAxis - ball.radius < 0 ){
         compOpp.score++;
         compScore.play();
         resetBall();
-    } else if( ball.x + ball.radius > canvas.width){
+    } else if( ball.xAxis + ball.radius > canvas.width){
         mainPl.score++;
         mainPlScore.play();
         resetBall();
@@ -140,7 +140,7 @@ function update(){
     }
     
     // if the paddle hit the mainPl or the comp paddle
-    let player = (ball.xAxis + ball.radius < canvas.width/2) ? user : com;
+    let player = (ball.xAxis + ball.radius < canvas.width/2) ? mainPl : compOpp;
     
     // if the ball hits a paddle
     if(collision(ball,player)){
