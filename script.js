@@ -44,7 +44,25 @@ function moveBallRand(ball) {
     ball.style.left = Math.floor(Math.random() * 90 + 5) + '%';
 }
 
+//Game loop to render(make) game
 
+function update(progress) {
+
+}
+
+function draw(){
+
+}
+
+function loop(timestamp) {
+    var progress = timestamp - lastRender
+
+    update(progress)
+    draw()
+
+    lastRender = timestamp
+    window.requestAnimationFrame(loop)
+}
 
 // function collision()
 // function framePerSecond()
