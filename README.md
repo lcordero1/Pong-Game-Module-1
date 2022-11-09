@@ -9,4 +9,4 @@ This version is user vs computer.
 
 This version of Pong was created with HTML5, Javascript, and CSS.
 
-![alt text](Pong-Game-Module-1\images\Pong.TAble.jpeg.jpg)
+![alt text](https://github.com/lcordero1/Pong-Game-Module-1.git)
