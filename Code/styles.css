@@ -2,19 +2,14 @@
     margin: 0;
     box-sizing: border-box;
 }
+
 body {
-    background-color: rgb(23, 23, 86);
-}
-/* body{ */
-    /* background-image: url("backgroundImg.jpg");
-    background-color: rgb(40, 38, 38); */
-/* body {
     background-color: rgb(47, 47, 152);
-    /* background-image: url(images\backgroundImg.jpg);
+    background-image: url(../images/background.jpeg);
     background-repeat: no-repeat;
     width: 100%;
     height: 100%; 
- } */
+ } 
 
 #canvas{
     width:80%;
@@ -39,20 +34,20 @@ body {
     width: 80%;
     height: 90%;
 }
-#netObj{
+/* #netObj{
     color: solid white;
     height: 10;
     width: 2;
 
-} 
-div > #startBtn{
+}  */
+/* div > #startBtn{
     margin: auto;
     text-align: center;
     position: relative;
     display: flex;
     right: 30;
     left:-20;
-}
+} */
 div > #resetBtn{
     margin: auto;
     text-align: end;

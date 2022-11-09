@@ -1,20 +1,18 @@
 // select canvas element
-const game = document.getElementById("gameContainer");
+const gameContainer = document.getElementById("gameContainer");
 
 // getContext of canvas = methods and properties to draw and do a lot of thing to the canvas
-const canvas = document.getElementByID("canvas")
-const ctx = canvas.getContext('2d');
+const gameboard = document.querySelector("#canvas")
+const ctx = gameboard.getContext('2d');
 //select score element
 const compScore = document.getElementById("computer-score")
 const mainPlScore = document.getElementById("mainPlayer-score")
 //select player elements
 // const  mainPl = document.getElementById("main-player")
 // const compOpp = document.getElementById("computer")
-//calling game elements
-const game = document.getElementById("gameContainer")
 
 
-class Player {
+class Competitor {
     constructor(xAxis, yAxis, width, height, score, color) {
         this.xAxis = xAxis,
             this.yAxis + yAxis,
@@ -27,81 +25,86 @@ class Player {
 
 
 // create player1 paddle
-const mainPl = new Player(0, 0, 25, 100, 0, "blue")
+const mainPl = new Competitor(0, 0, 25, 100, 0, "blue")
 
 
 // Computer Paddle
-const compOpp = new Player(25, 100, game.width - 25, (game.height - 100), 0, "red")
+const compOpp = new Competitor(25, 100, game.width - 25, (game.height - 100), 0, "red")
 
 // Ball
 const ball = {
-    xAxis: game.width / 2,
-    yAxis: game.height / 2,
+    xAxis: gameboard.width / 2,
+    yAxis: gameboard.height / 2,
     radius: 10,
-    velocityX: 5,
-    velocityY: 5,
+    velocityXAxis: 3,
+    velocityYAxis: 3,
     speed: 1,
     color: "#white"
 }
+
+const net = {
+    x: (gameboard.width - 2) / 2,
+    y: 0,
+    height: 10,
+    width: 4,
+    color: "WHITE"
+}
 // Net
-const netObj = document.createElement("netObj")
-document.body.appendChild(net)
-// net.xAxis : (canvas.width - 2)/2,
-// net.yAxis : 0
+// const netObj = document.createElement("netObj")
+// document.body.appendChild(netObj)
+
 
 //event listener for reset and start button to do those functions when the btn is clicked
 resetBtn.addEventListener("click", resetGame)
-startBtn.addEventListener("click", startGame)
+// startBtn.addEventListener("click", startGame)
 
 // Function for drawing rectangles
-function drawRect(xAxis, yAxis, w, h, color) {
+function drawRect(xAxis, yAxis, width, height, color) {
     ctx.fillStyle = color;
-    ctx.fillRect(xAxis, yAxis, w, h);
-    ctx.strokeRect()
+    ctx.fillRect(xAxis, yAxis, width, height);
+    ctx.strokeRect(xAxis, yAxis, width, height)
 }
-
-drawRect(0, 0, .width, canvas.height, "#000");
 
 // draw circle, will be used to draw the ball
 function drawCircle(xAxis, yAxis, radius, color) {
     ctx.fillStyle = color;
     ctx.beginPath();
-    //
-    //for the arc you need x axis y axis radius 
-    ctx.arc(xAxis, yAxis, radius, 0, Math.PI * 2, true);
+    //for the arc you need x axis, y axis, radius, start angle, end angle, direction
+    ctx.arc(xAxis, yAxis, radius, 0, 2 * Math.PI, true);
     ctx.closePath();
     ctx.fill();
 }
 
 // to listen for mouse
-canvas.addEventListener("mousemove", getMousePos);
+gameboard.addEventListener("mousemove", getMousePos);
 
 function getMousePos(evt) {
-    let rect = canvas.getBoundingClientRect();
+    let rect = gameboard.getBoundingClientRect();
 
     mainPl.yAxis = evt.clientY - rect.top - mainPl.height / 2;
 }
-//getBoundingClientRect providwa information about the size of an element and its position relative to the  area in computer graphics that is currently being viewed
+//getBoundingClientRect provides infoabout size of an element and its position relative to the  area in computer graphics that is currently being viewed
 // resets the ball when  mainPl scores or compOpp scores
 function resetBall() {
-    ball.xAxis = canvas.width / 2;
-    ball.yAxis = canvas.height / 2;
+    ball.xAxis = gameboard.width / 2;
+    ball.yAxis = gameboard.height / 2;
     ball.velocityX = -ball.velocityX;
-    ball.speed = 7;
+    ball.speed = 5;
 }
-//velocity controls speed of ball
 
-// draw the net
-// function drawNet(){
-//     for(let i = 0; i <= canvas.height; i+=15){
-//         drawRect(net.xAxis, net.yAxis + i, net.width, net.height, net.color);
-//     }
-// }
+
+
+//draw the net
+function drawNet() {
+    for (let i = 0; i <= gameboard.height; i += 15) {
+        drawRect(net.xAxis, net.yAxis + i, net.width, net.height, net.color);
+    }
+}
 
 //draw text is used to create text on canvas
 function drawText(text, xAxis, yAxis) {
     ctx.fillStyle = "#FFF";
-    ctx.font = "45px fantasy";
+    ctx.font = "25px fantasy";
     ctx.fillText(text, xAxis, yAxis);
 }
 
@@ -119,38 +122,45 @@ function collision(b, p) {
 
     return p.left < b.right && p.top < b.bottom && p.right > b.left && p.bottom > b.top;
 }
-
+function resetGame() {
+    rounds = 0;
+    mainPlScore = 0;
+    compScore = 0;
+    ties = 0;
+    round_number.innerHTML = 'Round: '
+    ties_number.innerHTML = '0'
+    computerScore_span.innerHTML = '0'
+    userScore_span.innerHTML = '0'
+}
 // update function, the function that does all calculations
 function update() {
 
     // change the score of players, if 
-    //for when the ball goes to the left "ball.xAxis<0" computer win, else if "ball.xAxis > canvas.width" the user win
     if (ball.xAxis - ball.radius < 0) {
         compOpp.score++;
-        compScore.play();
         resetBall();
-    } else if (ball.xAxis + ball.radius > canvas.width) {
+    } else if (ball.xAxis + ball.radius > gameboard.width) {
         mainPl.score++;
-        mainPlScore.play();
+        // mainPlScore.play();
         resetBall();
     }
 
-    // the ball has a velocity
-    ball.xAxis += ball.velocityX;
-    ball.yAxis += ball.velocityY;
+    // the ball has a velocity - velocity controls speed of ball
+    ball.xAxis += ball.velocityXAxis;
+    ball.yAxis += ball.velocityYAxis;
 
 
-    // simple AI for computer 
+    // simple AI for computer - so that computer can play. The speee of computer will start at 0.1 and increase
     compOpp.yAxis += ((ball.yAxis - (compOpp.yAxis + compOpp.height / 2))) * 0.1;
 
     // if the ball collides with bottom and top walls the y velocity reverses.
-    if (ball.yAxis - ball.radius < 0 || ball.yAxis + ball.radius > game.height) {
-        ball.velocityY = -ball.velocityY;
-        wall.play();
+    if (ball.yAxis - ball.radius < 0 || ball.yAxis + ball.radius > gameboard.height) {
+        ball.velocityY = -ball.velocityYAxis;
+        // wall.play();
     }
 
     // if the paddle hits the mainPl or the comp paddle. Use a ternary operator to show whos turn it is when the ball is on the xAxis 
-    let player = (ball.xAxis + ball.radius < game.width / 2) ? mainPl : compOpp;
+    let player = (ball.xAxis + ball.radius < gameboard.width / 2) ? mainPl : compOpp;
 
     // if statment for when the ball hits one of the paddles. Whether it be mainPl or comp
     if (collision(ball, player)) {
@@ -159,38 +169,47 @@ function update() {
 
         collidePoint = collidePoint / (player.height / 2);
 
-        // normalize the value of collidePoint, we need to get numbers between -1 and 1.
-        // -player.height/2 < collide Point < player.height/2
+        // need to get numbers between -1 and 1.
 
-        // The ball needs to hit top and bottom of paddle at a -45degrees angle 
-        //The ball will hit the center at a 0degrees angle, will go straight across gameboard
-        // Math.PI/4 = 45degrees
+        // The ball needs to hit top and bottom of paddle at a -45 degree angle 
+        //The ball will hit the center at 0 degree angle, will go straight across gameboard
+        // Math.PI/4 = 45 degree (solve for)
         let angleRad = (Math.PI / 4) * collidePoint;
 
-        // change the X and Y velocity direction
-        let direction = (ball.xAxis + ball.radius < game.width / 2) ? 1 : -1;
-        ball.velocityX = direction * ball.speed * Math.cos(angleRad);
-        ball.velocityY = ball.speed * Math.sin(angleRad);
+        // after collision happens, then change the velocity of the ball
+        let direction = (ball.xAxis + ball.radius < gameboard.width / 2) ? 1 : -1;
+        ball.velocityXAxis = direction * ball.speed * Math.cos(angleRad);
+        ball.velocityYAxis = ball.speed * Math.sin(angleRad);
 
         // ball speed will increases with paddle hit
         ball.speed += 0.1;
     }
 }
+// var game = {
+//     tickNumber: 0,
+//     timer: null,
+    
+//     tick: function() {
+//       game.tickNumber++;
+//       graphics.drawGame();
+//       game.timer = window.setTimeout("game.tick()", 500);
+//     }
+// }
 
 // render function for canvas drawing
 function render() {
 
     // clear the canvas
-    drawRect(0, 0, canvas.width, canvas.height, "#000");
+    drawRect(0, 0, gameboard.width, gameboard.height, "#000");
 
     // draw the user score to the left
-    drawText(mainPl.score, game.width / 4, game.height / 5);
+    drawText(mainPl.score, gameboard.width / 4, gameboard.height / 5);
 
     // draw the computer score to the right
-    drawText(compOpp.score, 3 * game.width / 4, game.height / 5);
+    drawText(compOpp.score, 3 * gameboard.width / 4, gameboard.height / 5);
 
     // draw the net
-    // drawNet();
+    drawNet();
 
     // draw the mainPl paddle
     drawRect(mainPl.xAxis, mainPl.yAxis, mainPl.width, mainPl.height, mainPl.color);
@@ -199,9 +218,9 @@ function render() {
     drawRect(compOpp.xAxis, compOpp.yAxis, compOpp.width, compOpp.height, compOpp.color);
 
     // draw the ball
-    drawArc(ball.xAxis, ball.yAxis, ball.radius, ball.color);
+    drawCircle(ball.xAxis, ball.yAxis, ball.radius, ball.color);
 }
-function game() {
+function gameStart() {
 
     update();
     render();
@@ -216,4 +235,4 @@ let loop = setInterval(game, 1000 / framePerSecond);
 
 
 
-
+    
