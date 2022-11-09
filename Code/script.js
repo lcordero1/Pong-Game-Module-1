@@ -29,15 +29,15 @@ const mainPl = new Competitor(0, 0, 25, 100, 0, "blue")
 
 
 // Computer Paddle
-const compOpp = new Competitor(25, 100, game.width - 25, (game.height - 100), 0, "red")
+const compOpp = new Competitor(25, 100, gameboard.width - 25, (gameboard.height - 100), 0, "red")
 
 // Ball
 const ball = {
     xAxis: gameboard.width / 2,
     yAxis: gameboard.height / 2,
     radius: 10,
-    velocityXAxis: 3,
-    velocityYAxis: 3,
+    velocityX: 3,
+    velocityY: 3,
     speed: 1,
     color: "#white"
 }
@@ -145,9 +145,9 @@ function update() {
         resetBall();
     }
 
-    // the ball has a velocity - velocity controls speed of ball
-    ball.xAxis += ball.velocityXAxis;
-    ball.yAxis += ball.velocityYAxis;
+    // the ball has a velocity - velocity controls speed and direection of ball
+    ball.xAxis += ball.velocityX;
+    ball.yAxis += ball.velocityY;
 
 
     // simple AI for computer - so that computer can play. The speee of computer will start at 0.1 and increase
@@ -155,7 +155,7 @@ function update() {
 
     // if the ball collides with bottom and top walls the y velocity reverses.
     if (ball.yAxis - ball.radius < 0 || ball.yAxis + ball.radius > gameboard.height) {
-        ball.velocityY = -ball.velocityYAxis;
+        ball.velocityY = -ball.velocityY;
         // wall.play();
     }
 
@@ -179,7 +179,7 @@ function update() {
         // after collision happens, then change the velocity of the ball
         let direction = (ball.xAxis + ball.radius < gameboard.width / 2) ? 1 : -1;
         ball.velocityXAxis = direction * ball.speed * Math.cos(angleRad);
-        ball.velocityYAxis = ball.speed * Math.sin(angleRad);
+        ball.velocityY = ball.speed * Math.sin(angleRad);
 
         // ball speed will increases with paddle hit
         ball.speed += 0.1;
@@ -229,7 +229,7 @@ function gameStart() {
 let framePerSecond = 50;
 
 //call the game function 50 times every 1 Sec
-let loop = setInterval(game, 1000 / framePerSecond);
+let loop = setInterval(gameStart, 1000 / framePerSecond);
 
 
 
