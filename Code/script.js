@@ -9,6 +9,9 @@ const mainPlScore = document.getElementById("mainPlayer-score")
 //select player elements
 // const  mainPl = document.getElementById("main-player")
 // const compOpp = document.getElementById("computer")
+//calling game elements
+const game = document.getElementById("gameContainer")
+
 
 class Player {
     constructor(xAxis, yAxis, width, height, score, color) {
@@ -23,20 +26,20 @@ class Player {
 
 
 // create player1 paddle
-const mainPl = new Player (0, (canvas.height - 100)/2, 0, "white")
+const mainPl = new Player (0, 0, 25, 100, 0, "blue")
 
 
 // Computer Paddle
-const compOpp = new Player (canvas.width - 10, (canvas.height - 100)/2, 10, 100, 0,"white")
-//width and height of paddle
+const compOpp = new Player (25, 100, game.width - 25, (game.height - 100), 0, "red")
+
 // Ball
 const ball = {
-    xAxis : canvas.width/2,
-    yAxis : canvas.height/2,
+    xAxis : game.width/2,
+    yAxis : game.height/2,
     radius : 10,
     velocityX : 5,
     velocityY : 5,
-    speed : 7,
+    speed : 1,
     color : "#white"
 }
 // Net
@@ -45,12 +48,18 @@ document.body.appendChild(net)
 // net.xAxis : (canvas.width - 2)/2,
 // net.yAxis : 0
 
-// Function for drawing rectangles
+//event listener for reset and start button to do those functions when the btn is clicked
+resetBtn.addEventListener("click", resetGame)
+startBtn.addEventListener("click", startGame)
 
+// Function for drawing rectangles
 function drawRect(xAxis, yAxis, w, h, color){
     ctx.fillStyle = color;
     ctx.fillRect(xAxis, yAxis, w, h);
+    ctx.strokeRect()
 }
+
+drawRect(0, 0, canvas.width, canvas.height, "#000");
 
 // draw circle, will be used to draw the ball
 function drawCircle(xAxis, yAxis, r, color){
@@ -63,7 +72,7 @@ function drawCircle(xAxis, yAxis, r, color){
     ctx.fill();
 }
 
-// listening to the mouse
+// to listen for mouse
 canvas.addEventListener("mousemove", getMousePos);
 
  function getMousePos(evt){
@@ -134,12 +143,12 @@ function update(){
     compOpp.yAxis += ((ball.yAxis - (compOpp.yAxis + compOpp.height/2)))*0.1;
     
     // if the ball collides with bottom and top walls the y velocity reverses.
-    if(ball.yAxis - ball.radius < 0 || ball.yAxis + ball.radius > canvas.height){
+    if(ball.yAxis - ball.radius < 0 || ball.yAxis + ball.radius > game.height){
         ball.velocityY = -ball.velocityY;
         wall.play();
     }
     
-    // if the paddle hits the mainPl or the comp paddle. Used a ternary operator to show whos turn it is when the ball is on the xAxis 
+    // if the paddle hits the mainPl or the comp paddle. Use a ternary operator to show whos turn it is when the ball is on the xAxis 
     let player = (ball.xAxis + ball.radius < canvas.width/2) ? mainPl : compOpp;
     
     // if the ball hits a paddle
@@ -173,13 +182,13 @@ function render(){
     drawRect(0, 0, canvas.width, canvas.height, "#000");
     
     // draw the user score to the left
-    drawText(user.score,canvas.width/4,canvas.height/5);
+    drawText(mainPl.score,game.width/4,game.height/5);
     
-    // draw the COM score to the right
-    drawText(compOpp.score,3*canvas.width/4,canvas.height/5);
+    // draw the computer score to the right
+    drawText(compOpp.score,3*game.width/4,game.height/5);
     
     // draw the net
-    drawNet();
+    // drawNet();
     
     // draw the mainPl paddle
     drawRect(mainPl.xAxis, mainPl.yAxis, mainPl.width, mainPl.height, mainPl.color);
