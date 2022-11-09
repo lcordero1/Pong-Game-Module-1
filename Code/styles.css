@@ -29,6 +29,7 @@ body {
     bottom:0;
 }
 #title1{
+    font-style: "Courier New", monospace;
     background: #fff;
     text-align: center;
     border: 3px solid green;
@@ -42,7 +43,20 @@ body {
     color: solid white;
     height: 10;
     width: 2;
-    lengt
 
 } 
+div > #startBtn{
+    margin: auto;
+    text-align: center;
+    position: relative;
+    display: flex;
+    right: 30;
+    left:-20;
+}
+div > #resetBtn{
+    margin: auto;
+    text-align: end;
+    display: flex;
+    position: relative;
+}
 
