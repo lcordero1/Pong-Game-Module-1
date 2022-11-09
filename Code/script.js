@@ -40,13 +40,10 @@ const ball = {
     color : "#white"
 }
 // Net
-const net = document.getElementById("net") {
-    xAxis : (canvas.width - 2)/2,
-    yAxis : 0,
-    height : 10,
-    width : 2,
-    color : "#white"
-}
+const netObj = document.createElement("netObj")
+document.body.appendChild(net)
+// net.xAxis : (canvas.width - 2)/2,
+// net.yAxis : 0
 
 // Function for drawing rectangles
 
@@ -59,6 +56,8 @@ function drawRect(xAxis, yAxis, w, h, color){
 function drawCircle(xAxis, yAxis, r, color){
     ctx.fillStyle = color;
     ctx.beginPath();
+    //
+    //for the arc you need
     ctx.arc(xAxis,yAxis,r,0,Math.PI*2,true);
     ctx.closePath();
     ctx.fill();
@@ -70,9 +69,9 @@ canvas.addEventListener("mousemove", getMousePos);
  function getMousePos(evt){
      let rect = canvas.getBoundingClientRect();
     
-   mainPl.yAxis = evt.clientY - rect.top - user.height/2;
+   mainPl.yAxis = evt.clientY - rect.top - mainPl.height/2;
 }
-//getBoundingClientRect providing information about the size of an element and its position relative to the  area in computer graphics that is currently being viewed
+//getBoundingClientRect providwa information about the size of an element and its position relative to the  area in computer graphics that is currently being viewed
 // resets the ball when  mainPl scores or compOpp scores
 function resetBall(){
     ball.xAxis = canvas.width/2;
@@ -83,11 +82,11 @@ function resetBall(){
 //velocity controls speed of ball
 
 // draw the net
-function drawNet(){
-    for(let i = 0; i <= canvas.height; i+=15){
-        drawRect(net.xAxis, net.yAxis + i, net.width, net.height, net.color);
-    }
-}
+// function drawNet(){
+//     for(let i = 0; i <= canvas.height; i+=15){
+//         drawRect(net.xAxis, net.yAxis + i, net.width, net.height, net.color);
+//     }
+// }
 
 //draw text is used to create text on canvas
 function drawText(text,xAxis,yAxis){
@@ -114,7 +113,8 @@ function collision(b,p){
 // update function, the function that does all calculations
 function update(){
     
-    // change the score of players, if the ball goes to the left "ball.xAxis<0" computer win, else if "ball.xAxis > canvas.width" the user win
+    // change the score of players, if 
+    //for when the ball goes to the left "ball.xAxis<0" computer win, else if "ball.xAxis > canvas.width" the user win
     if( ball.xAxis - ball.radius < 0 ){
         compOpp.score++;
         compScore.play();
@@ -139,7 +139,7 @@ function update(){
         wall.play();
     }
     
-    // if the paddle hit the mainPl or the comp paddle
+    // if the paddle hits the mainPl or the comp paddle. Used a ternary operator to show whos turn it is when the ball is on the xAxis 
     let player = (ball.xAxis + ball.radius < canvas.width/2) ? mainPl : compOpp;
     
     // if the ball hits a paddle
