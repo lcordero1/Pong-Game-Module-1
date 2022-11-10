@@ -10,11 +10,11 @@ const mainPlScore = document.getElementById("mainPlayer-score")
 //select player elements
 // const  mainPl = document.getElementById("main-player")
 // const compOpp = document.getElementById("computer")
-
+const resetBtn = document.querySelector("#resetBtn")
 
 class Competitor {
     constructor(xAxis, yAxis, width, height, score, color) {
-        this.xAxis = xAxis,
+            this.xAxis = xAxis,
             this.yAxis + yAxis,
             this.width = width,
             this.height = height,
@@ -25,11 +25,12 @@ class Competitor {
 
 
 // create player1 paddle
-const mainPl = new Competitor(0, 0, 25, 100, 0, "blue")
+const mainPl = new Competitor(0, 0, 25, 50, 0, "blue")
 
 
 // Computer Paddle
-const compOpp = new Competitor(25, 100, gameboard.width - 25, (gameboard.height - 100), 0, "red")
+const compOpp = new Competitor( gameboard.width - 25, gameboard.height - 50, 25, 50, 0, "red")
+
 
 // Ball
 const ball = {
@@ -89,7 +90,7 @@ function resetBall() {
     ball.xAxis = gameboard.width / 2;
     ball.yAxis = gameboard.height / 2;
     ball.velocityX = -ball.velocityX;
-    ball.speed = 5;
+    ball.speed = 1;
 }
 
 
@@ -97,8 +98,9 @@ function resetBall() {
 //draw the net
 function drawNet() {
     for (let i = 0; i <= gameboard.height; i += 15) {
-        drawRect(net.xAxis, net.yAxis + i, net.width, net.height, net.color);
+        drawRect(net.x, net.y + i, net.width, net.height, net.color);
     }
+    ctx.fillsytle = "#FF0000";
 }
 
 //draw text is used to create text on canvas
@@ -178,7 +180,7 @@ function update() {
 
         // after collision happens, then change the velocity of the ball
         let direction = (ball.xAxis + ball.radius < gameboard.width / 2) ? 1 : -1;
-        ball.velocityXAxis = direction * ball.speed * Math.cos(angleRad);
+        ball.velocityX = direction * ball.speed * Math.cos(angleRad);
         ball.velocityY = ball.speed * Math.sin(angleRad);
 
         // ball speed will increases with paddle hit
