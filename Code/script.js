@@ -159,7 +159,7 @@ function update() {
         // wall.play();
     }
 
-    // if the paddle hits the mainPl or the comp paddle. Use a ternary operator to show whos turn it is when the ball is on the xAxis 
+    // ternary operator used to show whos turn it is when the ball is on the xAxis  
     let player = (ball.xAxis + ball.radius < gameboard.width / 2) ? mainPl : compOpp;
 
     // if statment for when the ball hits one of the paddles. Whether it be mainPl or comp
