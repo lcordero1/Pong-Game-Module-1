@@ -9,7 +9,7 @@ export default async function ProjectsPage() {
     <div className="space-y-6">
       <header>
         <h1 className="text-3xl italic">Projects</h1>
-        <p className="mt-1 font-sans-ui text-sm text-stone-600">
+        <p className="mt-1 font-sans-ui text-sm text-stone-600 dark:text-stone-300">
           Everything in motion. Click in to manage tasks.
         </p>
       </header>

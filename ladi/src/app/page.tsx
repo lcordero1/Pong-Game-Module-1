@@ -12,7 +12,7 @@ export default async function HomePage() {
         <h1 className="text-4xl italic">
           Ladi&rsquo;s <span className="text-[color:var(--color-accent)]">busy</span>-body schedule
         </h1>
-        <p className="mt-1 font-sans-ui text-sm text-stone-600">
+        <p className="mt-1 font-sans-ui text-sm text-stone-600 dark:text-stone-300">
           One loop for everything you&rsquo;re juggling.
         </p>
       </header>

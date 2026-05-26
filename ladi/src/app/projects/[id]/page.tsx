@@ -16,7 +16,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
   return (
     <div className="space-y-5">
-      <Link href="/projects" className="font-sans-ui text-xs text-stone-500 hover:text-stone-800">
+      <Link href="/projects" className="font-sans-ui text-xs text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-100">
         ← All projects
       </Link>
       <header>
@@ -26,12 +26,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
             style={{ backgroundColor: project.color }}
           />
           <h1 className="text-3xl italic">{project.name}</h1>
-          <span className="font-sans-ui text-[10px] uppercase tracking-wider text-stone-400">
+          <span className="font-sans-ui text-[10px] uppercase tracking-wider text-stone-400 dark:text-stone-500">
             {project.kind}
           </span>
         </div>
         {project.description && (
-          <p className="mt-2 font-sans-ui text-sm text-stone-600">{project.description}</p>
+          <p className="mt-2 font-sans-ui text-sm text-stone-600 dark:text-stone-300">{project.description}</p>
         )}
       </header>
       <ProjectMetricsCard metrics={metrics} color={project.color} />

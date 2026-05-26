@@ -1,10 +1,28 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @theme {
   --color-bg: #faf7f2;
   --color-ink: #1f1d1a;
   --color-muted: #6b6862;
   --color-accent: #c97b4d;
+}
+
+[data-theme="dark"] {
+  --color-bg: #1a1815;
+  --color-ink: #f0ece5;
+  --color-muted: #98948c;
+  --color-accent: #d8916a;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]):not([data-theme="dark"]) {
+    --color-bg: #1a1815;
+    --color-ink: #f0ece5;
+    --color-muted: #98948c;
+    --color-accent: #d8916a;
+  }
 }
 
 html,

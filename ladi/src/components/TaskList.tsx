@@ -46,12 +46,12 @@ export default function TaskList({ projectId, initialTasks }: Props) {
       <TaskForm onSubmit={add} />
 
       <section>
-        <h3 className="mb-2 text-sm font-sans-ui uppercase tracking-wider text-stone-500">
+        <h3 className="mb-2 text-sm font-sans-ui uppercase tracking-wider text-stone-500 dark:text-stone-400">
           Open ({open.length})
         </h3>
         <ul className="space-y-1.5">
           {open.length === 0 && (
-            <li className="font-sans-ui text-sm text-stone-400">Nothing open. Add one above.</li>
+            <li className="font-sans-ui text-sm text-stone-400 dark:text-stone-500">Nothing open. Add one above.</li>
           )}
           {open.map((task) => (
             <TaskRow
@@ -73,7 +73,7 @@ export default function TaskList({ projectId, initialTasks }: Props) {
 
       {done.length > 0 && (
         <section>
-          <h3 className="mb-2 text-sm font-sans-ui uppercase tracking-wider text-stone-500">
+          <h3 className="mb-2 text-sm font-sans-ui uppercase tracking-wider text-stone-500 dark:text-stone-400">
             Done ({done.length})
           </h3>
           <ul className="space-y-1">
@@ -115,7 +115,7 @@ function TaskRow({
 }) {
   if (editing) {
     return (
-      <li className="rounded-xl border border-stone-300 bg-white/80 p-3">
+      <li className="rounded-xl border border-stone-300 bg-white/80 p-3 dark:border-stone-700 dark:bg-stone-900/80">
         <TaskForm
           initial={task}
           onSubmit={(patch) => onUpdate(patch)}
@@ -126,7 +126,7 @@ function TaskRow({
   }
   const isDone = task.status === "done";
   return (
-    <li className="group flex items-center gap-3 rounded-lg px-2 py-1.5 hover:bg-white/60">
+    <li className="group flex items-center gap-3 rounded-lg px-2 py-1.5 hover:bg-white/60 dark:hover:bg-stone-900/60">
       <input
         type="checkbox"
         checked={isDone}
@@ -134,11 +134,11 @@ function TaskRow({
         className="h-4 w-4 accent-stone-700"
       />
       <div className="flex-1">
-        <p className={`font-sans-ui text-sm ${isDone ? "text-stone-400 line-through" : ""}`}>
+        <p className={`font-sans-ui text-sm ${isDone ? "text-stone-400 line-through dark:text-stone-500" : ""}`}>
           {task.title}
         </p>
         {(task.scheduledFor || task.dueDate || task.notes) && (
-          <p className="font-sans-ui text-xs text-stone-500">
+          <p className="font-sans-ui text-xs text-stone-500 dark:text-stone-400">
             {task.scheduledFor && <span>scheduled {task.scheduledFor} · </span>}
             {task.dueDate && <span>due {task.dueDate.slice(0, 10)} · </span>}
             {task.notes && <span className="italic">{task.notes}</span>}
@@ -147,13 +147,13 @@ function TaskRow({
       </div>
       <button
         onClick={onEdit}
-        className="font-sans-ui text-xs text-stone-500 opacity-0 transition group-hover:opacity-100 hover:text-stone-800"
+        className="font-sans-ui text-xs text-stone-500 opacity-0 transition group-hover:opacity-100 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-100"
       >
         edit
       </button>
       <button
         onClick={onDelete}
-        className="font-sans-ui text-xs text-stone-400 opacity-0 transition group-hover:opacity-100 hover:text-rose-600"
+        className="font-sans-ui text-xs text-stone-400 opacity-0 transition group-hover:opacity-100 hover:text-rose-600 dark:text-stone-500 dark:hover:text-rose-400"
       >
         delete
       </button>

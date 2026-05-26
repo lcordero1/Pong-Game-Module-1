@@ -55,16 +55,16 @@ export default function TodayView({ projects, tasks: initialTasks }: Props) {
   }
 
   return (
-    <div className="rounded-2xl border border-stone-300/70 bg-white/60 p-6">
+    <div className="rounded-2xl border border-stone-300/70 bg-white/60 p-6 dark:border-stone-700/70 dark:bg-stone-900/60">
       <div className="mb-3 flex items-baseline justify-between">
         <h2 className="text-xl italic">Today</h2>
-        <p className="font-sans-ui text-xs text-stone-500">
+        <p className="font-sans-ui text-xs text-stone-500 dark:text-stone-400">
           Workday {minutesToHm(workday.startMinutes)}–{minutesToHm(workday.endMinutes)}
         </p>
       </div>
       {schedule.length === 0 ? (
-        <p className="font-sans-ui text-sm text-stone-500">
-          Nothing scheduled for today. Pick a project and add a task with today's date.
+        <p className="font-sans-ui text-sm text-stone-500 dark:text-stone-400">
+          Nothing scheduled for today. Pick a project and add a task with today&rsquo;s date.
         </p>
       ) : (
         <ol className="space-y-2">
@@ -74,7 +74,7 @@ export default function TodayView({ projects, tasks: initialTasks }: Props) {
             return (
               <li
                 key={slot.task.id}
-                className="flex items-center gap-3 rounded-xl border border-stone-200/80 bg-white/50 px-4 py-2"
+                className="flex items-center gap-3 rounded-xl border border-stone-200/80 bg-white/50 px-4 py-2 dark:border-stone-700/80 dark:bg-stone-900/50"
               >
                 <input
                   type="checkbox"
@@ -87,14 +87,14 @@ export default function TodayView({ projects, tasks: initialTasks }: Props) {
                   style={{ backgroundColor: slot.project?.color ?? "#999" }}
                 />
                 <div className="flex-1">
-                  <p className={`font-sans-ui text-sm ${slot.task.status === "done" ? "line-through text-stone-400" : ""}`}>
+                  <p className={`font-sans-ui text-sm ${slot.task.status === "done" ? "line-through text-stone-400 dark:text-stone-500" : ""}`}>
                     {slot.task.title}
                   </p>
-                  <p className="font-sans-ui text-xs text-stone-500">
+                  <p className="font-sans-ui text-xs text-stone-500 dark:text-stone-400">
                     {slot.project?.name} {inWork ? "· work block" : "· personal time"}
                   </p>
                 </div>
-                <p className="font-sans-ui text-xs text-stone-600 tabular-nums">
+                <p className="font-sans-ui text-xs text-stone-600 tabular-nums dark:text-stone-300">
                   {minutesToHm(slot.startMinutes)}–{minutesToHm(slot.endMinutes)}
                 </p>
               </li>

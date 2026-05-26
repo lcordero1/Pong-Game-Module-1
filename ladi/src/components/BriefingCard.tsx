@@ -30,7 +30,7 @@ export default function BriefingCard() {
   }
 
   return (
-    <div className="rounded-2xl border border-stone-300/70 bg-white/60 p-6">
+    <div className="rounded-2xl border border-stone-300/70 bg-white/60 p-6 dark:border-stone-700/70 dark:bg-stone-900/60">
       <div className="mb-3 flex items-baseline justify-between">
         <h2 className="text-xl italic">
           {briefing?.kind === "afternoon" ? "Midday check-in" : "Morning briefing"}
@@ -38,23 +38,23 @@ export default function BriefingCard() {
         <button
           onClick={regenerate}
           disabled={loading}
-          className="font-sans-ui text-xs text-stone-600 underline-offset-4 hover:underline disabled:opacity-50"
+          className="font-sans-ui text-xs text-stone-600 underline-offset-4 hover:underline disabled:opacity-50 dark:text-stone-300"
         >
           {loading ? "Thinking…" : briefing ? "Regenerate" : "Generate"}
         </button>
       </div>
       {error && <p className="font-sans-ui text-sm text-rose-600">{error}</p>}
       {briefing ? (
-        <div className="whitespace-pre-wrap font-sans-ui text-sm leading-relaxed text-stone-800">
+        <div className="whitespace-pre-wrap font-sans-ui text-sm leading-relaxed text-stone-800 dark:text-stone-100">
           {briefing.content}
         </div>
       ) : (
-        <p className="font-sans-ui text-sm text-stone-500">
+        <p className="font-sans-ui text-sm text-stone-500 dark:text-stone-400">
           Click <em>Generate</em> to get a briefing on what to focus on.
         </p>
       )}
       {briefing && (
-        <p className="mt-3 font-sans-ui text-xs text-stone-400">
+        <p className="mt-3 font-sans-ui text-xs text-stone-400 dark:text-stone-500">
           {new Date(briefing.createdAt).toLocaleString()}
         </p>
       )}

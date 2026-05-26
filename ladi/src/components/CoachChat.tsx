@@ -92,19 +92,19 @@ export default function CoachChat() {
       : false;
 
   return (
-    <div className="flex h-[75vh] flex-col rounded-2xl border border-stone-300/70 bg-white/60">
-      <div className="flex items-center justify-between border-b border-stone-200 px-5 py-3">
+    <div className="flex h-[75vh] flex-col rounded-2xl border border-stone-300/70 bg-white/60 dark:border-stone-700/70 dark:bg-stone-900/60">
+      <div className="flex items-center justify-between border-b border-stone-200 px-5 py-3 dark:border-stone-700">
         <h2 className="text-lg italic">Coach</h2>
         <button
           onClick={clear}
-          className="font-sans-ui text-xs text-stone-500 hover:text-stone-800"
+          className="font-sans-ui text-xs text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-100"
         >
           Clear chat
         </button>
       </div>
       <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto px-5 py-4">
         {messages.length === 0 && (
-          <p className="font-sans-ui text-sm text-stone-500">
+          <p className="font-sans-ui text-sm text-stone-500 dark:text-stone-400">
             Ask what to focus on, or tell the coach what to add — e.g. &ldquo;Schedule podcast prep tomorrow at 9am.&rdquo;
           </p>
         )}
@@ -117,14 +117,14 @@ export default function CoachChat() {
           />
         ))}
         {busy && (
-          <p className="font-sans-ui text-xs text-stone-400 italic">Coach is thinking…</p>
+          <p className="font-sans-ui text-xs text-stone-400 italic dark:text-stone-500">Coach is thinking…</p>
         )}
-        {error && <p className="font-sans-ui text-sm text-rose-600">Error: {error}</p>}
+        {error && <p className="font-sans-ui text-sm text-rose-600 dark:text-rose-400">Error: {error}</p>}
       </div>
 
       {lastPending && lastPending.pending && (
-        <div className="border-t border-amber-200 bg-amber-50/80 px-5 py-3">
-          <p className="mb-2 font-sans-ui text-xs text-amber-800">
+        <div className="border-t border-amber-200 bg-amber-50/80 px-5 py-3 dark:border-amber-700/50 dark:bg-amber-900/30">
+          <p className="mb-2 font-sans-ui text-xs text-amber-800 dark:text-amber-200">
             {allResolved
               ? "All proposals decided. Send to coach?"
               : `${lastPending.pending.length} proposal${lastPending.pending.length > 1 ? "s" : ""} pending — approve or deny each.`}
@@ -132,25 +132,25 @@ export default function CoachChat() {
           <button
             onClick={() => submitResolutions(lastPending.pending!)}
             disabled={!allResolved || busy}
-            className="rounded-full bg-stone-900 px-4 py-1.5 font-sans-ui text-xs text-stone-50 hover:bg-stone-800 disabled:opacity-50"
+            className="rounded-full bg-stone-900 px-4 py-1.5 font-sans-ui text-xs text-stone-50 hover:bg-stone-800 disabled:opacity-50 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-200"
           >
             {busy ? "…" : "Send decisions"}
           </button>
         </div>
       )}
 
-      <form onSubmit={send} className="flex gap-2 border-t border-stone-200 px-5 py-3">
+      <form onSubmit={send} className="flex gap-2 border-t border-stone-200 px-5 py-3 dark:border-stone-700">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Talk to your coach…"
           disabled={busy || !!lastPending}
-          className="flex-1 rounded-full border border-stone-300 bg-white px-4 py-2 font-sans-ui text-sm focus:border-stone-500 focus:outline-none disabled:opacity-50"
+          className="flex-1 rounded-full border border-stone-300 bg-white px-4 py-2 font-sans-ui text-sm focus:border-stone-500 focus:outline-none disabled:opacity-50 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100"
         />
         <button
           type="submit"
           disabled={busy || !input.trim() || !!lastPending}
-          className="rounded-full bg-stone-900 px-5 py-2 font-sans-ui text-sm text-stone-50 hover:bg-stone-800 disabled:opacity-50"
+          className="rounded-full bg-stone-900 px-5 py-2 font-sans-ui text-sm text-stone-50 hover:bg-stone-800 disabled:opacity-50 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-200"
         >
           {busy ? "…" : "Send"}
         </button>
@@ -186,8 +186,8 @@ function MessageRow({
               key={`${message.id}-${i}`}
               className={`mx-auto max-w-[80%] rounded-md border px-3 py-1.5 font-sans-ui text-xs ${
                 b.is_error
-                  ? "border-rose-200 bg-rose-50 text-rose-800"
-                  : "border-stone-200 bg-stone-100 text-stone-600"
+                  ? "border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-200"
+                  : "border-stone-200 bg-stone-100 text-stone-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
               }`}
             >
               {b.content}
@@ -203,7 +203,9 @@ function MessageRow({
     <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
       <div
         className={`max-w-[85%] space-y-2 ${
-          isUser ? "rounded-2xl bg-stone-900 px-4 py-2 text-stone-50" : ""
+          isUser
+            ? "rounded-2xl bg-stone-900 px-4 py-2 text-stone-50 dark:bg-stone-100 dark:text-stone-900"
+            : ""
         }`}
       >
         {blocks.map((b, i) => {
@@ -212,7 +214,9 @@ function MessageRow({
               <div
                 key={`${message.id}-${i}`}
                 className={`whitespace-pre-wrap font-sans-ui text-sm ${
-                  isUser ? "" : "rounded-2xl bg-stone-200 px-4 py-2 text-stone-900"
+                  isUser
+                    ? ""
+                    : "rounded-2xl bg-stone-200 px-4 py-2 text-stone-900 dark:bg-stone-800 dark:text-stone-100"
                 }`}
               >
                 {b.text}
@@ -267,26 +271,26 @@ function ProposalCard({
     <div
       className={`rounded-xl border px-3 py-2 font-sans-ui text-xs ${
         decision === "approve"
-          ? "border-emerald-300 bg-emerald-50"
+          ? "border-emerald-300 bg-emerald-50 dark:border-emerald-700 dark:bg-emerald-950/30"
           : decision === "deny"
-            ? "border-stone-300 bg-stone-50"
+            ? "border-stone-300 bg-stone-50 dark:border-stone-700 dark:bg-stone-800/60"
             : isPending
-              ? "border-amber-300 bg-amber-50"
-              : "border-stone-200 bg-stone-50"
+              ? "border-amber-300 bg-amber-50 dark:border-amber-700 dark:bg-amber-950/30"
+              : "border-stone-200 bg-stone-50 dark:border-stone-700 dark:bg-stone-800/60"
       }`}
     >
-      <p className="mb-1 font-medium text-stone-800">
+      <p className="mb-1 font-medium text-stone-800 dark:text-stone-100">
         <span className="mr-1">
           {decision === "approve" ? "✓" : decision === "deny" ? "✗" : "?"}
         </span>
         Proposal: {verb}
       </p>
-      <dl className="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-0.5 text-stone-700">
+      <dl className="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-0.5 text-stone-700 dark:text-stone-200">
         {Object.entries(input)
           .filter(([, v]) => v !== "" && v != null)
           .map(([k, v]) => (
             <span key={k} className="contents">
-              <dt className="text-stone-500">{k}</dt>
+              <dt className="text-stone-500 dark:text-stone-400">{k}</dt>
               <dd className="font-mono break-words">{String(v)}</dd>
             </span>
           ))}
@@ -295,20 +299,20 @@ function ProposalCard({
         <div className="mt-2 flex gap-2">
           <button
             onClick={() => onResolve(toolUseId, "approve")}
-            className="rounded-full bg-emerald-600 px-3 py-1 text-xs text-white hover:bg-emerald-700"
+            className="rounded-full bg-emerald-600 px-3 py-1 text-xs text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600"
           >
             Approve
           </button>
           <button
             onClick={() => onResolve(toolUseId, "deny")}
-            className="rounded-full border border-stone-400 px-3 py-1 text-xs text-stone-700 hover:bg-stone-100"
+            className="rounded-full border border-stone-400 px-3 py-1 text-xs text-stone-700 hover:bg-stone-100 dark:border-stone-600 dark:text-stone-200 dark:hover:bg-stone-800"
           >
             Deny
           </button>
         </div>
       )}
       {isPending && decision && (
-        <p className="mt-1 text-stone-500 italic">
+        <p className="mt-1 text-stone-500 italic dark:text-stone-400">
           {decision === "approve" ? "Will be approved." : "Will be denied."}
         </p>
       )}

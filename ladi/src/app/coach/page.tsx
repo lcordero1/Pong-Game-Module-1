@@ -7,7 +7,7 @@ export default function CoachPage() {
     <div className="space-y-5">
       <header>
         <h1 className="text-3xl italic">Coach</h1>
-        <p className="mt-1 font-sans-ui text-sm text-stone-600">
+        <p className="mt-1 font-sans-ui text-sm text-stone-600 dark:text-stone-300">
           A proactive coach that knows what you&rsquo;re juggling.
         </p>
       </header>

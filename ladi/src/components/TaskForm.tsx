@@ -40,62 +40,62 @@ export default function TaskForm({ initial, onSubmit, onCancel }: Props) {
   }
 
   return (
-    <form onSubmit={submit} className="space-y-2 rounded-xl border border-stone-300/70 bg-white/40 p-3">
+    <form onSubmit={submit} className="space-y-2 rounded-xl border border-stone-300/70 bg-white/40 p-3 dark:border-stone-700/70 dark:bg-stone-900/40">
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="What needs doing?"
-        className="w-full rounded-md border border-stone-300 bg-white px-3 py-2 font-sans-ui text-sm focus:border-stone-500 focus:outline-none"
+        className="w-full rounded-md border border-stone-300 bg-white px-3 py-2 font-sans-ui text-sm focus:border-stone-500 focus:outline-none dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100 dark:focus:border-stone-500"
       />
       <input
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
         placeholder="Notes (optional)"
-        className="w-full rounded-md border border-stone-300 bg-white px-3 py-2 font-sans-ui text-sm focus:border-stone-500 focus:outline-none"
+        className="w-full rounded-md border border-stone-300 bg-white px-3 py-2 font-sans-ui text-sm focus:border-stone-500 focus:outline-none dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100 dark:focus:border-stone-500"
       />
       <div className="flex flex-wrap gap-2 font-sans-ui text-xs">
         <label className="flex items-center gap-1">
-          <span className="text-stone-500">Date</span>
+          <span className="text-stone-500 dark:text-stone-400">Date</span>
           <input
             type="date"
             value={scheduledFor}
             onChange={(e) => setScheduledFor(e.target.value)}
-            className="rounded border border-stone-300 bg-white px-2 py-1"
+            className="rounded border border-stone-300 bg-white px-2 py-1 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100"
           />
         </label>
         <button
           type="button"
           onClick={() => setScheduledFor(todayKey())}
-          className="rounded border border-stone-300 px-2 py-1 text-stone-600 hover:bg-stone-100"
+          className="rounded border border-stone-300 px-2 py-1 text-stone-600 hover:bg-stone-100 dark:border-stone-700 dark:text-stone-300 dark:hover:bg-stone-800"
         >
           Today
         </button>
         <label className="flex items-center gap-1">
-          <span className="text-stone-500">Start</span>
+          <span className="text-stone-500 dark:text-stone-400">Start</span>
           <input
             type="time"
             value={scheduledStart}
             onChange={(e) => setScheduledStart(e.target.value)}
-            className="rounded border border-stone-300 bg-white px-2 py-1"
+            className="rounded border border-stone-300 bg-white px-2 py-1 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100"
           />
         </label>
         <label className="flex items-center gap-1">
-          <span className="text-stone-500">Min</span>
+          <span className="text-stone-500 dark:text-stone-400">Min</span>
           <input
             type="number"
             min={5}
             step={5}
             value={estimatedMinutes}
             onChange={(e) => setEstimatedMinutes(Number(e.target.value))}
-            className="w-16 rounded border border-stone-300 bg-white px-2 py-1"
+            className="w-16 rounded border border-stone-300 bg-white px-2 py-1 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100"
           />
         </label>
         <label className="flex items-center gap-1">
-          <span className="text-stone-500">Priority</span>
+          <span className="text-stone-500 dark:text-stone-400">Priority</span>
           <select
             value={priority}
             onChange={(e) => setPriority(Number(e.target.value))}
-            className="rounded border border-stone-300 bg-white px-2 py-1"
+            className="rounded border border-stone-300 bg-white px-2 py-1 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100"
           >
             <option value={1}>High</option>
             <option value={2}>Medium</option>
@@ -108,14 +108,14 @@ export default function TaskForm({ initial, onSubmit, onCancel }: Props) {
           <button
             type="button"
             onClick={onCancel}
-            className="rounded px-3 py-1 font-sans-ui text-xs text-stone-500 hover:text-stone-800"
+            className="rounded px-3 py-1 font-sans-ui text-xs text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-100"
           >
             Cancel
           </button>
         )}
         <button
           type="submit"
-          className="rounded-full bg-stone-900 px-4 py-1.5 font-sans-ui text-xs text-stone-50 hover:bg-stone-800"
+          className="rounded-full bg-stone-900 px-4 py-1.5 font-sans-ui text-xs text-stone-50 hover:bg-stone-800 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-stone-200"
         >
           {initial ? "Save" : "Add task"}
         </button>
