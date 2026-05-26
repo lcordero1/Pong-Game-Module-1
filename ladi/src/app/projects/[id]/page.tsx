@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import TaskList from "@/components/TaskList";
+import ProjectMetricsCard from "@/components/ProjectMetrics";
 import { getProject, listTasks } from "@/lib/store";
+import { computeMetrics } from "@/lib/metrics";
 
 export const dynamic = "force-dynamic";
 
@@ -10,6 +12,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   const project = await getProject(id);
   if (!project) notFound();
   const tasks = await listTasks({ projectId: id });
+  const metrics = computeMetrics(tasks);
 
   return (
     <div className="space-y-5">
@@ -31,6 +34,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
           <p className="mt-2 font-sans-ui text-sm text-stone-600">{project.description}</p>
         )}
       </header>
+      <ProjectMetricsCard metrics={metrics} color={project.color} />
       <TaskList projectId={project.id} initialTasks={tasks} />
     </div>
   );

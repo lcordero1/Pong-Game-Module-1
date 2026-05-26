@@ -1,11 +1,11 @@
-# Lattie
+# Ladi
 
 Your busy-body project organizer. One loop for newsletter, podcast, speaker engagements, AI/video skills, and the work AI initiative — with an agent coach that knows your projects and nudges you around your workday.
 
 ## Setup
 
 ```bash
-cd lattie
+cd ladi
 npm install
 cp .env.example .env.local
 # add your Anthropic API key to .env.local
@@ -24,10 +24,10 @@ Open http://localhost:3000.
 
 ## Data
 
-Stored as JSON at `data/lattie.json`. Single-user, single-machine. Back up by copying the file.
+Stored as JSON at `data/ladi.json`. Single-user, single-machine. Back up by copying the file.
 
 ## Configuration
 
-- `LATTIE_WORK_START` / `LATTIE_WORK_END` — your workday window (defaults 10:00 / 18:30)
-- `LATTIE_TIMEZONE` — IANA timezone (defaults to America/New_York)
+- `LADI_WORK_START` / `LADI_WORK_END` — your workday window (defaults 10:00 / 18:30)
+- `LADI_TIMEZONE` — IANA timezone (defaults to America/New_York)
 - `ANTHROPIC_API_KEY` — required for the coach chat and briefings

@@ -4,7 +4,7 @@ import { randomUUID } from "crypto";
 import type { Project, Store, Task, CoachMessage, Briefing } from "./types";
 
 const DATA_DIR = path.join(process.cwd(), "data");
-const DATA_FILE = path.join(DATA_DIR, "lattie.json");
+const DATA_FILE = path.join(DATA_DIR, "ladi.json");
 
 const SEED_PROJECTS: Project[] = [
   {
@@ -178,6 +178,7 @@ export async function updateProject(id: string, patch: Partial<Project>): Promis
 export async function appendCoachMessage(message: Omit<CoachMessage, "id" | "createdAt">): Promise<CoachMessage> {
   const msg: CoachMessage = {
     ...message,
+    pending: message.pending ?? null,
     id: newId("msg"),
     createdAt: new Date().toISOString(),
   };
@@ -185,6 +186,22 @@ export async function appendCoachMessage(message: Omit<CoachMessage, "id" | "cre
     store.coachMessages.push(msg);
   });
   return msg;
+}
+
+export async function clearCoachPending(messageId: string): Promise<void> {
+  await mutate((store) => {
+    const m = store.coachMessages.find((m) => m.id === messageId);
+    if (m) m.pending = null;
+  });
+}
+
+export async function findPendingAssistant(): Promise<CoachMessage | null> {
+  const store = await readStore();
+  for (let i = store.coachMessages.length - 1; i >= 0; i--) {
+    const m = store.coachMessages[i];
+    if (m.role === "assistant" && m.pending && m.pending.length > 0) return m;
+  }
+  return null;
 }
 
 export async function listCoachMessages(limit = 40): Promise<CoachMessage[]> {

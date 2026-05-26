@@ -6,8 +6,8 @@ export interface Workday {
 }
 
 export function getWorkday(): Workday {
-  const start = process.env.LATTIE_WORK_START ?? "10:00";
-  const end = process.env.LATTIE_WORK_END ?? "18:30";
+  const start = process.env.LADI_WORK_START ?? "10:00";
+  const end = process.env.LADI_WORK_END ?? "18:30";
   return { startMinutes: hmToMinutes(start), endMinutes: hmToMinutes(end) };
 }
 

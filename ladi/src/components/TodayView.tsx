@@ -29,7 +29,7 @@ export default function TodayView({ projects, tasks: initialTasks }: Props) {
         if (fired.has(key)) continue;
         if (nowMin === slot.startMinutes) {
           fired.add(key);
-          new Notification(`${slot.project?.name ?? "Lattie"}: ${slot.task.title}`, {
+          new Notification(`${slot.project?.name ?? "Ladi"}: ${slot.task.title}`, {
             body: `${minutesToHm(slot.startMinutes)}–${minutesToHm(slot.endMinutes)}`,
             tag: key,
           });

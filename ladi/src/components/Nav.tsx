@@ -16,7 +16,7 @@ export default function Nav() {
     <header className="border-b border-stone-300/60 bg-[color:var(--color-bg)]">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link href="/" className="text-2xl italic">
-          <span className="text-[color:var(--color-accent)]">L</span>attie
+          <span className="text-[color:var(--color-accent)]">L</span>adi
         </Link>
         <nav className="flex items-center gap-1 font-sans-ui text-sm">
           {TABS.map((t) => {

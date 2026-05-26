@@ -29,10 +29,24 @@ export interface Task {
   completedAt: string | null;
 }
 
+export type StoredContentBlock =
+  | { type: "text"; text: string }
+  | { type: "tool_use"; id: string; name: string; input: Record<string, unknown> }
+  | { type: "tool_result"; tool_use_id: string; content: string; is_error?: boolean };
+
 export interface CoachMessage {
   id: string;
   role: "user" | "assistant";
-  content: string;
+  /**
+   * Either plain text (simple conversational turns) or an array of content
+   * blocks. Block array is used when tool_use / tool_result are involved.
+   */
+  content: string | StoredContentBlock[];
+  /**
+   * For an assistant message: list of tool_use_ids still awaiting Ladi's
+   * approve/deny. Null/empty once all have been resolved.
+   */
+  pending: string[] | null;
   createdAt: string;
 }
 

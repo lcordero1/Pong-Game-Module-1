@@ -2,7 +2,7 @@ node_modules/
 .next/
 .env.local
 .env
-data/lattie.json
+data/ladi.json
 next-env.d.ts
 *.tsbuildinfo
 .DS_Store
