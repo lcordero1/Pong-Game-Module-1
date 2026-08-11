@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contract Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>Contract Generator</h1>
+      <p class="subtitle">Automated agreement drafting — offline, format-preserving</p>
+    </header>
+
+    <main class="app-main">
+
+      <!-- Step 1: Upload Template -->
+      <section class="card" id="step-upload">
+        <div class="step-label">Step 1</div>
+        <h2>Upload Word Template</h2>
+
+        <div class="drop-zone" id="drop-zone">
+          <div class="drop-zone-icon">📄</div>
+          <p>Drag &amp; drop your <strong>.docx</strong> template here</p>
+          <p class="hint">Or <label for="template-input" class="link">browse files</label></p>
+          <input type="file" id="template-input" accept=".docx" hidden>
+        </div>
+
+        <div class="template-status" id="template-status" hidden>
+          <span class="status-icon">✓</span>
+          <span id="template-name"></span>
+          <button class="btn-ghost" id="change-template">Change</button>
+        </div>
+
+        <div class="template-help">
+          <details>
+            <summary>How to prepare your .docx template</summary>
+            <div class="help-content">
+              <p>Replace each variable field in your Word document with a <code>{{placeholder}}</code> tag, then save and upload that file here. The app will fill in the values while leaving all fonts, tables, and layout untouched.</p>
+              <table class="placeholder-table">
+                <thead>
+                  <tr><th>Placeholder</th><th>Filled with</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>{{agreement_date}}</code></td><td>e.g. August 11, 2026</td></tr>
+                  <tr><td><code>{{company_name}}</code></td><td>Loan Out entity name</td></tr>
+                  <tr><td><code>{{producer_name}}</code></td><td>Producer</td></tr>
+                  <tr><td><code>{{director_name}}</code></td><td>Director</td></tr>
+                  <tr><td><code>{{artist_name}}</code></td><td>Artist stage name</td></tr>
+                  <tr><td><code>{{record_name}}</code></td><td>Song / record title</td></tr>
+                  <tr><td><code>{{filming_dates}}</code></td><td>e.g. 08/18/2026 – 08/20/2026</td></tr>
+                  <tr><td><code>{{rough_cut_date}}</code></td><td>e.g. 08/26/2026</td></tr>
+                  <tr><td><code>{{final_cut_date}}</code></td><td>e.g. 09/04/2026</td></tr>
+                  <tr><td><code>{{compensation_words}}</code></td><td>Total in legal written form</td></tr>
+                  <tr><td><code>{{compensation_dollars}}</code></td><td>e.g. $65,929.60</td></tr>
+                  <tr><td><code>{{front_end_words}}</code></td><td>Front End (75%) in words</td></tr>
+                  <tr><td><code>{{front_end_dollars}}</code></td><td>e.g. $49,447.20</td></tr>
+                  <tr><td><code>{{balance_words}}</code></td><td>Balance (25%) in words</td></tr>
+                  <tr><td><code>{{balance_dollars}}</code></td><td>e.g. $16,482.40</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Mode Tabs -->
+      <div class="tabs" id="mode-tabs">
+        <button class="tab active" data-tab="single">Single Agreement</button>
+        <button class="tab" data-tab="batch">Batch Mode</button>
+      </div>
+
+      <!-- Step 2: Single Agreement -->
+      <section class="card" id="tab-single">
+        <div class="step-label">Step 2</div>
+        <h2>Agreement Details</h2>
+
+        <div class="form-grid">
+          <!-- Document -->
+          <div class="form-section">
+            <h3>Document</h3>
+            <div class="field">
+              <label for="agreement_date">Agreement Date</label>
+              <input type="text" id="agreement_date" placeholder="August 11, 2026">
+            </div>
+            <div class="field">
+              <label for="company_name">Company Name (Loan Out)</label>
+              <input type="text" id="company_name" placeholder="e.g. Fridayy Entertainment LLC">
+            </div>
+          </div>
+
+          <!-- Parties -->
+          <div class="form-section">
+            <h3>Parties</h3>
+            <div class="field">
+              <label for="producer_name">Producer Name</label>
+              <input type="text" id="producer_name" placeholder="e.g. Jamila Gimba">
+            </div>
+            <div class="field">
+              <label for="director_name">Director Name</label>
+              <input type="text" id="director_name" placeholder="e.g. Jyde Ajala">
+            </div>
+            <div class="field">
+              <label for="artist_name">Artist Name</label>
+              <input type="text" id="artist_name" placeholder="e.g. Fridayy">
+            </div>
+            <div class="field">
+              <label for="record_name">Record Name</label>
+              <input type="text" id="record_name" placeholder="e.g. Haiku">
+            </div>
+          </div>
+
+          <!-- Dates -->
+          <div class="form-section">
+            <h3>Dates</h3>
+            <div class="field">
+              <label for="filming_start">Filming Start Date</label>
+              <input type="date" id="filming_start">
+            </div>
+            <div class="field">
+              <label for="filming_end">Filming End Date</label>
+              <input type="date" id="filming_end">
+            </div>
+            <div class="field">
+              <label for="rough_cut_date">Rough Cut Delivery Date</label>
+              <input type="date" id="rough_cut_date">
+            </div>
+            <div class="field">
+              <label for="final_cut_date">Final Cut Delivery Date</label>
+              <input type="date" id="final_cut_date">
+            </div>
+          </div>
+
+          <!-- Compensation -->
+          <div class="form-section">
+            <h3>Compensation</h3>
+            <div class="field">
+              <label for="total_compensation">Total Compensation ($)</label>
+              <input type="number" id="total_compensation" placeholder="0.00" step="0.01" min="0">
+            </div>
+            <div class="comp-breakdown">
+              <div class="comp-row">
+                <span class="comp-label">Front End</span>
+                <span class="comp-value" id="front-end-display">—</span>
+              </div>
+              <div class="comp-row">
+                <span class="comp-label">Balance</span>
+                <span class="comp-value" id="balance-display">—</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="split_ratio">Split Ratio</label>
+              <select id="split_ratio">
+                <option value="75">75 / 25 (Standard VPA)</option>
+                <option value="50">50 / 50</option>
+                <option value="100">100 / 0 (Full upfront)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Generate -->
+        <div class="generate-section">
+          <div class="filename-field">
+            <label for="output_filename">Output Filename</label>
+            <input type="text" id="output_filename" placeholder="e.g. Friday - Haiku - VPA (Loan Out)">
+          </div>
+          <button class="btn-primary" id="generate-btn" disabled>
+            ↓ Generate Agreement
+          </button>
+        </div>
+
+        <div class="error-msg" id="error-msg" hidden></div>
+      </section>
+
+      <!-- Step 2: Batch Mode -->
+      <section class="card" id="tab-batch" hidden>
+        <div class="step-label">Step 2</div>
+        <h2>Batch Mode</h2>
+        <p class="section-desc">Generate multiple agreements at once. Download the CSV template, fill in one row per agreement, then upload it here.</p>
+
+        <div class="batch-actions">
+          <button class="btn-secondary" id="download-csv-template">↓ Download CSV Template</button>
+        </div>
+
+        <div class="drop-zone" id="csv-drop-zone">
+          <div class="drop-zone-icon">📊</div>
+          <p>Drag &amp; drop your completed <strong>.csv</strong> here</p>
+          <p class="hint">Or <label for="csv-input" class="link">browse files</label></p>
+          <input type="file" id="csv-input" accept=".csv" hidden>
+        </div>
+
+        <div id="batch-preview" hidden>
+          <div class="batch-header">
+            <h3><span id="batch-count">0</span> agreements queued</h3>
+            <button class="btn-ghost" id="clear-batch">Clear</button>
+          </div>
+          <div class="table-scroll">
+            <table id="batch-table" class="preview-table">
+              <thead id="batch-thead"></thead>
+              <tbody id="batch-tbody"></tbody>
+            </table>
+          </div>
+          <button class="btn-primary" id="batch-generate-btn">↓ Generate All &amp; Download ZIP</button>
+          <div class="error-msg" id="batch-error-msg" hidden></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- CDN Libraries -->
+  <script src="https://unpkg.com/pizzip@3.1.4/dist/pizzip.js"></script>
+  <script src="https://unpkg.com/docxtemplater@3.46.0/build/docxtemplater.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
